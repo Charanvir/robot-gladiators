@@ -14,59 +14,61 @@ var enemyAttack = 12;
 
 
 var fight = function (enemyName) {
-    // Alert players that they are starting the round
-    window.alert("Welcome to Robot Gladiators");
 
-    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+    while (enemyHealth > 0) {
 
+        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
 
-    if (promptFight === "fight" || promptFight === "FIGHT") {
-        // Subtract the value or playerAttack from the value of eneryHealth
-        enemyHealth = enemyHealth - playerAttack;
+        if (promptFight === "fight" || promptFight === "FIGHT") {
+            // Subtract the value or playerAttack from the value of eneryHealth
+            enemyHealth = enemyHealth - playerAttack;
 
-        // Log the resulting message to the console
-        console.log(
-            playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
-        )
+            // Log the resulting message to the console
+            console.log(
+                playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
+            )
 
-        // Check enemy's health
-        if (enemyHealth <= 0) {
-            window.alert(enemyName + " has died")
+            // Check enemy's health
+            if (enemyHealth <= 0) {
+                window.alert(enemyName + " has died")
+            } else {
+                window.alert(enemyName + " still has " + enemyHealth + " health remaining.")
+            }
+
+            // Subtract the value of eneryAttack from the value of playerHealth
+            playerHealth = playerHealth - enemyAttack;
+
+            // Log the resulting message to the console.
+            console.log(
+                enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
+            )
+
+            // Check player's health
+            if (playerHealth <= 0) {
+                window.alert(playerName + " has died")
+            } else {
+                window.alert(playerName + " still has " + playerHealth + " health remaining.")
+            }
+
+        } else if (promptFight === "skip" || promptFight === "SKIP") {
+            var confirmSkip = window.confirm("Are you sure you'd like to skip");
+
+            if (confirmSkip) {
+                window.alert(playerName + " has decided to skip this fight. GoodBye!");
+                playerMoney = playerMoney - 2;
+                console.log(playerName + " has " + playerMoney + " dollars remaining!")
+            } else {
+                fight();
+            }
+
         } else {
-            window.alert(enemyName + " still has " + enemyHealth + " health remaining.")
+            window.alert("You need to choose a valid option. Try Again!")
         }
-
-        // Subtract the value of eneryAttack from the value of playerHealth
-        playerHealth = playerHealth - enemyAttack;
-
-        // Log the resulting message to the console.
-        console.log(
-            enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
-        )
-
-        // Check player's health
-        if (playerHealth <= 0) {
-            window.alert(playerName + " has died")
-        } else {
-            window.alert(playerName + " still has " + playerHealth + " health remaining.")
-        }
-
-    } else if (promptFight === "skip" || promptFight === "SKIP") {
-        var confirmSkip = window.confirm("Are you sure you'd like to skip");
-
-        if (confirmSkip) {
-            window.alert(playerName + " has decided to skip this fight. GoodBye!");
-            playerMoney = playerMoney - 2;
-            console.log(playerName + " has " + playerMoney + " dollars remaining!")
-        } else {
-            fight();
-        }
-
-    } else {
-        window.alert("You need to choose a valid option. Try Again!")
     }
 }
 
 for (var i = 0; i < enemyNames.length; i++) {
-    fight(enemyNames[i]);
+    var pickedEnemyName = enemyNames[i];
+    enemyHealth = 50;
+    fight(pickedEnemyName);
 }
